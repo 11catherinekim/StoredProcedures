@@ -1,0 +1,20 @@
+USE [C12]
+GO
+/****** Object:  StoredProcedure [dbo].[Addresses_Delete]    Script Date: 2016-03-09 오후 4:16:52 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROC [dbo].[Addresses_Delete]
+	@Id int
+AS
+BEGIN
+
+	/*
+	Execute Addresses_Delete 114
+	*/
+
+DELETE Addresses
+WHERE 
+	Id = @Id
+END

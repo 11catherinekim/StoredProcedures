@@ -1,0 +1,67 @@
+USE [C12]
+GO
+/****** Object:  StoredProcedure [dbo].[Addresses_Update]    Script Date: 2016-03-09 오후 4:17:12 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER proc [dbo].[Addresses_Update]
+	@Id int,
+           @UserId nvarchar(128),
+		   @Latitude decimal (16,12)=null,
+		   @Longitude decimal(16,12)=null,
+		   @AddressLine1 nvarchar(200),
+		   @AddressLine2 nvarchar(100)=null,
+		   @City nvarchar(20),
+		   @StateProvinceId int,
+		   @ZipCode nvarchar(5),
+		   @CountryId int
+as 
+begin
+	/*
+
+	DECLARE @Id int = 98
+           DECLARE @UserId nvarchar(128) = 'bce86bd6-ccc5-4a05-a35b-350e1c9b38fc'
+		   DECLARE @Latitude decimal (16,12) = '33.9933257'
+		   DECLARE @Longitude decimal(16,12) = '-118.39878419999998'
+		   DECLARE @AddressLine1 nvarchar(200) = '400 Corporate Pointe'
+		   DECLARE @AddressLine2 nvarchar(100) = '400 Corporate Pointe'
+		   DECLARE @City nvarchar(20) = 'Culver City'
+		   DECLARE @StateProvinceId int = 9
+		   DECLARE @ZipCode nvarchar(5) = '90230'
+		   DECLARE @Geo geography = dbo.LatLonToGeography(@Latitude, @Longitude)
+		   DECLARE @CountryId int = 247
+
+	exec Addresses_Update
+		 @Id 
+		 , @UserId
+		 , @Latitude
+		 , @Longitude
+		 , @AddressLine1
+		 , @AddressLine2
+		 , @City
+		 , @StateProvinceId
+		 , @ZipCode
+		 , @CountryId
+
+	SELECT *From addresses where id = @id 
+	*/
+	Update [dbo].[Addresses] Set 
+		
+		DateModified = getutcdate()
+		, UserId = @UserId 
+		, Latitude = @Latitude
+		, Longitude = @Longitude
+		, AddressLine1 = @AddressLine1
+		, AddressLine2 = @AddressLine2
+		, City = @City
+		, StateProvinceId = @StateProvinceId
+		, ZipCode = @ZipCode
+		, Geo=dbo.LatLonToGeography(@Latitude, @Longitude)
+		, CountryId = @CountryId
+
+	
+	
+	WHERE 
+		Id = @Id
+End

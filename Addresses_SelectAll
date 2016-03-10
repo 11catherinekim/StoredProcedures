@@ -1,0 +1,38 @@
+USE [C12]
+GO
+/****** Object:  StoredProcedure [dbo].[Addresses_SelectAll]    Script Date: 2016-03-09 오후 4:18:19 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROC [dbo].[Addresses_SelectAll]
+AS
+BEGIN
+
+/*
+EXECUTE dbo.Addresses_SelectAll
+*/
+
+SELECT
+		A.Id 
+		, A.DateAdded
+		, A.DateModified
+		, A.Latitude
+		, A.Longitude
+		, A.AddressLine1
+		, A.AddressLine2
+		, A.City
+		, A.StateProvinceId
+		, A.ZipCode
+		, C.CountryId
+		, S.Name as StateProvincesName
+		, C.Name as CountriesName
+		
+
+	FROM dbo.Addresses A(nolock)
+	left join dbo.StateProvinces S(nolock)
+		on A.StateProvinceId = S.StateProvinceId
+	left join dbo.Countries C(nolock)
+		on S.CountryId = C.CountryId
+
+END

@@ -1,0 +1,82 @@
+USE [C12]
+GO
+/****** Object:  StoredProcedure [dbo].[Addresses_Insert]    Script Date: 2016-03-09 오후 4:14:40 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER proc [dbo].[Addresses_Insert]
+           @Id int output,
+		   @UserId nvarchar(128),
+		   @Latitude decimal (16,12)=null,
+		   @Longitude decimal(16,12)=null,
+		   @AddressLine1 nvarchar(200),
+		   @AddressLine2 nvarchar(100)=null,
+		   @City nvarchar(20),
+		   @StateProvinceId int,
+		   @ZipCode nvarchar(5),
+		   @CountryId int
+AS
+BEGIN
+
+/*
+
+DECLARE @Id int 
+DECLARE   @UserId nvarchar(128) = '123'
+DECLARE   @Latitude decimal (16,12) = '33.1234'
+DECLARE   @Longitude decimal(16,12) = '-133.4334521'
+DECLARE   @AddressLine1 nvarchar(200) = '123 Main St.'
+DECLARE   @AddressLine2 nvarchar(100) = 'apt 3'
+DECLARE   @City nvarchar(20) = 'Anchorage'
+DECLARE   @State int = 2
+DECLARE   @ZipCode nvarchar(5) = '12345'
+DECLARE		@CountryId int = 247
+
+	EXEC dbo.Addresses_Insert 
+		@Id OUTPUT
+		, @UserId
+		, @Latitude
+		, @Longitude
+		, @AddressLine1
+		, @AddressLine2
+		, @City
+		, @State
+		, @ZipCode  
+		, @CountryId
+
+	SELECT * FROM Addresses WHERE Id = @Id
+
+
+
+*/
+	
+
+	INSERT Addresses
+	(
+		  UserId
+		  , Latitude
+		  , Longitude
+		  , AddressLine1
+		  , AddressLine2
+		  , City
+		  , StateProvinceId
+		  , ZipCode	
+		  , CountryId
+		  , Geo	
+	)
+
+	VALUES 
+	(
+		  @UserId
+		, @Latitude
+		, @Longitude
+		, @AddressLine1
+		, @AddressLine2
+		, @City
+		, @StateProvinceId
+		, @ZipCode	
+		, @CountryId
+		, dbo.LatLonToGeography(@Latitude, @Longitude)
+	)
+	SET @Id = SCOPE_IDENTITY() 
+END

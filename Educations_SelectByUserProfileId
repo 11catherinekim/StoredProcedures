@@ -1,0 +1,28 @@
+USE [C12]
+GO
+/****** Object:  StoredProcedure [dbo].[Educations_SelectByUserProfileId]    Script Date: 2016-03-09 오후 4:17:44 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER proc [dbo].[Educations_SelectByUserProfileId]
+
+@UserProfileId int
+as 
+begin
+ /*
+	EXEC dbo.Educations_SelectByUserProfileId 80
+*/
+
+	SELECT 
+		  Id
+		  , StartDate
+		  , EndDate
+		  , SchoolName
+		  , Major
+		  , Degree
+	from dbo.Educations
+	where UserProfileId=@UserProfileId
+	ORDER BY StartDate desc
+
+END
